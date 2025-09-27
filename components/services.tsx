@@ -1,5 +1,6 @@
 import { Building, Lightbulb, Leaf, Settings } from "lucide-react"
 import { ScrollReveal } from "./scroll-reveal"
+import { Modern3DBackground } from "./modern-3d-background"
 
 const services = [
   {
@@ -30,8 +31,9 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="py-16 md:py-20">
-      <div className="container mx-auto px-4 sm:px-6">
+    <section id="services" className="py-16 md:py-20 relative">
+      <Modern3DBackground />
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <ScrollReveal className="text-center mb-12 md:mb-16">
           <div className="animate-slide-up">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">Services</h2>

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 import Image from "next/image"
 import { ParticleBackground } from "./particle-background"
+import { Modern3DBackground } from "./modern-3d-background"
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -17,7 +18,8 @@ export function Hero() {
 
   return (
     <section className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
-      <ParticleBackground />
+       <ParticleBackground />
+       <Modern3DBackground />
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-8xl">
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
