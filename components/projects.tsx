@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ExternalLink, Calendar, MapPin } from "lucide-react"
+import Image from "next/image"
 
 const projects = [
   {
@@ -91,9 +92,11 @@ export function Projects() {
               className={`github-card group cursor-pointer animate-scale-in animate-stagger-${index + 2}`}
             >
               <div className="relative overflow-hidden rounded-lg mb-4">
-                <img
+                <Image
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
+                  width={600}
+                  height={400}
                   className="w-full aspect-[16/10] object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute top-4 right-4">

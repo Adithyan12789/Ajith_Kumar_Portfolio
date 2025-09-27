@@ -1,4 +1,5 @@
 import { Building, Lightbulb, Leaf, Settings } from "lucide-react"
+import { ScrollReveal } from "./scroll-reveal"
 
 const services = [
   {
@@ -31,29 +32,41 @@ export function Services() {
   return (
     <section id="services" className="py-20">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16 animate-slide-up">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">Services</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Comprehensive architectural services tailored to bring your vision to life with precision and creativity.
-          </p>
-        </div>
+        <ScrollReveal className="text-center mb-16">
+          <div className="animate-slide-up">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-balance">Services</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
+              Comprehensive architectural services tailored to bring your vision to life with precision and creativity.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <div key={service.title} className={`github-card animate-scale-in animate-stagger-${index + 1}`}>
-              <service.icon className="h-8 w-8 mb-4" />
-              <h3 className="text-lg font-semibold mb-3">{service.title}</h3>
-              <p className="text-muted-foreground mb-4 text-pretty text-sm">{service.description}</p>
+            <ScrollReveal key={service.title} delay={200 + index * 100}>
+              <div className="github-card hover-lift animate-scale-in-bounce">
+                <service.icon className="h-8 w-8 mb-4 text-blue-500 animate-float" />
+                <h3 className="text-lg font-semibold mb-3 group-hover:text-blue-500 transition-colors duration-200">
+                  {service.title}
+                </h3>
+                <p className="text-muted-foreground mb-4 text-pretty text-sm">
+                  {service.description}
+                </p>
 
-              <ul className="space-y-2">
-                {service.features.map((feature) => (
-                  <li key={feature} className="text-sm flex items-center text-muted-foreground">
-                    <div className="w-1.5 h-1.5 bg-accent rounded-full mr-3 flex-shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
+                <ul className="space-y-2">
+                  {service.features.map((feature, featureIndex) => (
+                    <li 
+                      key={feature} 
+                      className="text-sm flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200 animate-fade-in-stagger"
+                      style={{ animationDelay: `${featureIndex * 50}ms` }}
+                    >
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full mr-3 flex-shrink-0 animate-pulse-slow" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>

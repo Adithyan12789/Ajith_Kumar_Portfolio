@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 import Image from "next/image"
+import { ParticleBackground } from "./particle-background"
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -15,14 +16,15 @@ export function Hero() {
   if (!mounted) return null
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative pt-20">
-      <div className="container mx-auto px-6">
+    <section className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
+      <ParticleBackground />
+      <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-8xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="text-left space-y-8">
             <div className="animate-slide-up">
               <h1 className="text-5xl md:text-7xl font-bold text-balance leading-tight">
-                Architect &<span> Designer</span>
+                Architect &<span className="text-shimmer"> Designer</span>
               </h1>
             </div>
 
@@ -45,13 +47,13 @@ export function Hero() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 animate-slide-up animate-stagger-3">
-              <Button className="github-button github-button-primary px-6 py-3 text-base">
+              <Button className="github-button github-button-primary px-6 py-3 text-base hover-lift hover-glow">
                 View my work
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
                 variant="outline"
-                className="github-button github-button-secondary px-6 py-3 text-base bg-transparent"
+                className="github-button github-button-secondary px-6 py-3 text-base bg-transparent hover-scale hover-bounce"
               >
                 Download CV
               </Button>
@@ -83,20 +85,21 @@ export function Hero() {
             </div>
 
             {/* Photo Section */}
-            <div className="flex justify-center lg:justify-end animate-slide-up animate-stagger-2">
+            <div className="flex justify-center lg:justify-end animate-scale-in-bounce animate-stagger-2">
               <div className="relative">
-                <div className="w-80 h-80 md:w-96 md:h-96 relative rounded-2xl overflow-hidden bg-gradient-to-br from-accent/20 to-accent/10">
+                <div className="w-80 h-80 md:w-96 md:h-96 relative rounded-2xl overflow-hidden bg-gradient-to-br from-accent/20 to-accent/10 hover-lift animate-morph">
                   <Image
                     src="/profile-img-2.jpeg"
                     alt="Ajith Kumar - Architect & Designer"
                     fill
-                    className="object-cover rounded-2xl"
+                    className="object-cover rounded-2xl hover-scale"
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
                 </div>
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-xl"></div>
-                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/10 rounded-full blur-2xl"></div>
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-accent/20 rounded-full blur-xl animate-float"></div>
+                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-accent/10 rounded-full blur-2xl animate-pulse-slow"></div>
+                <div className="absolute top-1/2 -left-8 w-16 h-16 bg-blue-500/30 rounded-full blur-lg animate-glow"></div>
               </div>
             </div>
           </div>
