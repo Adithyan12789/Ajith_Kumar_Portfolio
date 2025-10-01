@@ -1,44 +1,71 @@
-import { Building, Lightbulb, Leaf, Settings } from "lucide-react"
-import { ScrollReveal } from "./scroll-reveal"
-import { Modern3DBackground } from "./modern-3d-background"
+import { Building, Lightbulb, Leaf, Settings } from "lucide-react";
+import { ScrollReveal } from "./scroll-reveal";
+import { ServiceSpline3DBackground } from "./spline-3d-background";
 
 const services = [
   {
     icon: Building,
     title: "Architectural Design",
-    description: "Complete architectural design services from concept to construction documentation.",
-    features: ["Conceptual Design", "Design Development", "Construction Documents", "3D Visualization"],
+    description:
+      "Complete architectural design services from concept to construction documentation.",
+    features: [
+      "Conceptual Design",
+      "Design Development",
+      "Construction Documents",
+      "3D Visualization",
+    ],
   },
   {
     icon: Lightbulb,
     title: "Interior Design",
-    description: "Thoughtful interior spaces that complement architectural vision and enhance user experience.",
-    features: ["Space Planning", "Material Selection", "Furniture Design", "Lighting Design"],
+    description:
+      "Thoughtful interior spaces that complement architectural vision and enhance user experience.",
+    features: [
+      "Space Planning",
+      "Material Selection",
+      "Furniture Design",
+      "Lighting Design",
+    ],
   },
   {
     icon: Leaf,
     title: "Sustainable Design",
-    description: "Environmentally conscious design solutions that minimize impact and maximize efficiency.",
-    features: ["LEED Certification", "Energy Modeling", "Sustainable Materials", "Green Building Strategies"],
+    description:
+      "Environmentally conscious design solutions that minimize impact and maximize efficiency.",
+    features: [
+      "LEED Certification",
+      "Energy Modeling",
+      "Sustainable Materials",
+      "Green Building Strategies",
+    ],
   },
   {
     icon: Settings,
     title: "Project Management",
-    description: "Comprehensive project oversight ensuring quality, timeline, and budget adherence.",
-    features: ["Construction Administration", "Vendor Coordination", "Quality Control", "Timeline Management"],
+    description:
+      "Comprehensive project oversight ensuring quality, timeline, and budget adherence.",
+    features: [
+      "Construction Administration",
+      "Vendor Coordination",
+      "Quality Control",
+      "Timeline Management",
+    ],
   },
-]
+];
 
 export function Services() {
   return (
     <section id="services" className="py-16 md:py-20 relative">
-      <Modern3DBackground />
+      <ServiceSpline3DBackground />
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <ScrollReveal className="text-center mb-12 md:mb-16">
           <div className="animate-slide-up">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">Services</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-balance">
+              Services
+            </h2>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty px-4">
-              Comprehensive architectural services tailored to bring your vision to life with precision and creativity.
+              Comprehensive architectural services tailored to bring your vision
+              to life with precision and creativity.
             </p>
           </div>
         </ScrollReveal>
@@ -57,8 +84,8 @@ export function Services() {
 
                 <ul className="space-y-1.5 sm:space-y-2">
                   {service.features.map((feature, featureIndex) => (
-                    <li 
-                      key={feature} 
+                    <li
+                      key={feature}
                       className="text-xs sm:text-sm flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200 animate-fade-in-stagger"
                       style={{ animationDelay: `${featureIndex * 50}ms` }}
                     >
@@ -73,5 +100,5 @@ export function Services() {
         </div>
       </div>
     </section>
-  )
+  );
 }

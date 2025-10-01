@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Calendar, MapPin } from "lucide-react";
 import Image from "next/image";
 import { ParticleBackground } from "./particle-background";
-import { Modern3DBackground } from "./modern-3d-background";
 
 const projects = [
   {
@@ -65,7 +64,7 @@ export function Projects() {
 
   return (
     <section id="projects" className="py-20 relative">
-      <Modern3DBackground />
+      <ParticleBackground/>
       <div className="container mx-auto px-6 relative z-10">
         <div className="mb-16 animate-slide-up">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Selected work</h2>

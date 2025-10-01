@@ -4,7 +4,8 @@ import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react"
 import { ParticleBackground } from "./particle-background"
-import Spline from '@splinetool/react-spline';
+import Spline, { HeroSpline3DBackground } from "./spline-3d-background"
+
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -29,6 +30,8 @@ export function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
       <ParticleBackground />
+      <HeroSpline3DBackground />
+      
       
       {/* Background Spline for mobile only */}
       {isMobile && (
