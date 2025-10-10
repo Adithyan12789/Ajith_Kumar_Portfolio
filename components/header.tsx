@@ -34,7 +34,7 @@ export function Header() {
           </div>
 
           <div className="hidden md:flex items-center space-x-8 animate-fade-in animate-stagger-2">
-            <a href="#about" className="github-nav-link py-2">
+            <a href="#" className="github-nav-link py-2">
               About
             </a>
             <a href="#projects" className="github-nav-link py-2">

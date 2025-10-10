@@ -46,7 +46,7 @@ export function Footer() {
                 <ul className="space-y-3">
                   <li>
                     <a
-                      href="#about"
+                      href="#"
                       className="text-muted-foreground hover:text-blue-500 transition-colors duration-200 hover:translate-x-1 transform block"
                     >
                       About
