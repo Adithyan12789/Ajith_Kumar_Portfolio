@@ -5,28 +5,24 @@ import { PixelBlastBackground } from "./3d-background";
 import { useState } from "react";
 import ProfileCard from "./reactBits/ProfileCard"; // ✅ Import ReactBits ProfileCard
 
-  const services = [
-    {
-      title: "Architectural Design",
-      image:
-        "https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-    },
-    {
-      title: "Interior Design",
-      image:
-        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2058&q=80",
-    },
-    {
-      title: "Sustainable Design",
-      image:
-        "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-    },
-    {
-      title: "Project Management",
-      image:
-        "https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
-    },
-  ];
+const services = [
+  {
+    title: "Architectural Design",
+    description: "Innovative architectural solutions tailored to your vision",
+  },
+  {
+    title: "Interior Design", 
+    description: "Creating beautiful and functional interior spaces",
+  },
+  {
+    title: "Sustainable Design",
+    description: "Eco-friendly designs for a sustainable future",
+  },
+  {
+    title: "Project Management",
+    description: "End-to-end project coordination and execution",
+  },
+];
 
 export function Services() {
   const [imageErrors, setImageErrors] = useState<{ [key: number]: boolean }>(
@@ -45,7 +41,7 @@ export function Services() {
   ];
 
   return (
-    <section id="services" className="py-20 md:py-28 relative">
+    <section id="services" className="min-h-screen py-20 md:py-28 relative">
       <PixelBlastBackground />
 
       <div className="container mx-auto px-4 sm:px-6">
@@ -61,27 +57,27 @@ export function Services() {
             </p>
           </div>
         </ScrollReveal>
-
         {/* ProfileCard Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center">
           {services.map((service, index) => (
             <ScrollReveal key={service.title} delay={index * 100}>
               <ProfileCard
-                name={service.title} // 👈 Title as main heading
-                title="Professional Service" // 👈 Subtitle (optional)
-                handle="" // 👈 Remove handle if not needed
-                status="" // 👈 Remove status text
+                name={service.title}
+                title={service.description}
+                handle=""
+                status=""
                 contactText="Learn More"
-                avatarUrl={service.image}
-                miniAvatarUrl={service.image}
-                showUserInfo={false} // 👈 hides the name/details overlay
+                avatarUrl="" // Empty since we don't want images
+                miniAvatarUrl=""
+                showUserInfo={false}
                 enableTilt={true}
                 enableMobileTilt={false}
                 onContactClick={() =>
                   console.log(`Learn more about ${service.title}`)
                 }
-                behindGradient="linear-gradient(135deg, #0f172a, #1e3a8a)"
+                behindGradient="linear-gradient(135deg, #0f172a, rgb(0, 0, 0))"
                 innerGradient="linear-gradient(180deg, rgba(255,255,255,0.1), transparent)"
+                className="text-only-card" // New class for text-only cards
               />
             </ScrollReveal>
           ))}

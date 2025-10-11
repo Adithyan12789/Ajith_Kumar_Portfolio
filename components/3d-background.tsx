@@ -37,7 +37,7 @@ export function ServiceSpline3DBackground() {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none">
       <Spline
-        scene="https://prod.spline.design/OawnZdNdfOHLCXgK/scene.splinecode"
+        scene="https://prod.spline.design/jj0CesQLAr3YN6pg/scene.splinecode" 
         className="w-full h-full"
         style={{
           mixBlendMode: "normal",
