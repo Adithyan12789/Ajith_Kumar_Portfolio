@@ -28,7 +28,6 @@ export function ThemeSelector() {
         className="github-button github-button-secondary flex items-center gap-2"
       >
         <Palette className="w-4 h-4" />
-        <span className="hidden sm:inline">Theme</span>
       </Button>
 
       {isOpen && (

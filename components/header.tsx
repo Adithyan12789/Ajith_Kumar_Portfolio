@@ -37,11 +37,11 @@ export function Header() {
             <a href="#" className="github-nav-link py-2">
               About
             </a>
+            <a href="#services" className="github-nav-link py-2">
+              Services
+            </a>
             <a href="#projects" className="github-nav-link py-2">
               Projects
-            </a>
-            <a href="#experience" className="github-nav-link py-2">
-              Experience
             </a>
             <a href="#contact" className="github-nav-link py-2">
               Contact
@@ -49,8 +49,10 @@ export function Header() {
           </div>
 
           <div className="flex items-center gap-4 animate-slide-in-right animate-stagger-3">
-            <ThemeSelector />
+            
             <Button className="github-button github-button-primary px-4 py-2">Get in touch</Button>
+
+            <ThemeSelector />
           </div>
         </nav>
       </div>

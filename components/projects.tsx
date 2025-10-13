@@ -1,8 +1,7 @@
 "use client";
-
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Calendar, MapPin, ArrowUp, ArrowDown, Play, Pause, Grid3X3 } from "lucide-react";
+import { ExternalLink, Calendar, MapPin, Play, Pause, Grid3X3 } from "lucide-react";
 import Image from "next/image";
 import { ParticleBackground } from "./particle-background";
 
@@ -15,8 +14,7 @@ const projects = [
     location: "Los Angeles, CA",
     image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
     video: "https://player.vimeo.com/video/834456347?h=6c8b5c5a5a",
-    description:
-      "A contemporary family home that seamlessly blends indoor and outdoor living through expansive glass walls and sustainable materials.",
+    description: "A contemporary family home that seamlessly blends indoor and outdoor living through expansive glass walls and sustainable materials.",
     tags: ["Sustainable", "Modern", "Glass Design"],
     specs: ["4500 sq ft", "4 Bedrooms", "3 Bathrooms", "Solar Powered"],
   },
@@ -28,8 +26,7 @@ const projects = [
     location: "New York, NY",
     image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80",
     video: "https://player.vimeo.com/video/834456347?h=6c8b5c5a5a",
-    description:
-      "A biophilic office design that brings nature into the urban workspace, promoting wellness and productivity.",
+    description: "A biophilic office design that brings nature into the urban workspace, promoting wellness and productivity.",
     tags: ["Biophilic", "Office", "Green Building"],
     specs: ["12 Floors", "LEED Platinum", "Rooftop Garden"],
   },
@@ -41,8 +38,7 @@ const projects = [
     location: "Malibu, CA",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
     video: "https://player.vimeo.com/video/834456347?h=6c8b5c5a5a",
-    description:
-      "A sustainable coastal home designed to withstand environmental challenges while maximizing ocean views.",
+    description: "A sustainable coastal home designed to withstand environmental challenges while maximizing ocean views.",
     tags: ["Coastal", "Sustainable", "Views"],
     specs: ["3200 sq ft", "Ocean Front", "Hurricane Resistant"],
   },
@@ -54,8 +50,7 @@ const projects = [
     location: "San Francisco, CA",
     image: "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80",
     video: "https://player.vimeo.com/video/834456347?h=6c8b5c5a5a",
-    description:
-      "A flexible workspace designed for creativity and collaboration, featuring modular spaces and cutting-edge technology integration.",
+    description: "A flexible workspace designed for creativity and collaboration, featuring modular spaces and cutting-edge technology integration.",
     tags: ["Tech", "Flexible", "Collaboration"],
     specs: ["8 Floors", "Modular Design", "AI Integration"],
   },
@@ -64,12 +59,12 @@ const projects = [
 export function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [visibleProjects, setVisibleProjects] = useState<number[]>([]);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "masonry" | "carousel">("grid");
   const [magneticHover, setMagneticHover] = useState({ x: 0, y: 0 });
+
   const sectionRef = useRef<HTMLDivElement>(null);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const titleRef = useRef<HTMLDivElement>(null);
@@ -77,11 +72,7 @@ export function Projects() {
   const videoRefs = useRef<(HTMLIFrameElement | null)[]>([]);
 
   const categories = ["All", "Residential", "Commercial"];
-
-  const filteredProjects =
-    selectedCategory === "All"
-      ? projects
-      : projects.filter((project) => project.category === selectedCategory);
+  const filteredProjects = selectedCategory === "All" ? projects : projects.filter((project) => project.category === selectedCategory);
 
   // Magnetic cursor effect
   useEffect(() => {
@@ -89,12 +80,7 @@ export function Projects() {
       const { clientX, clientY } = e;
       const magneticX = (clientX / window.innerWidth - 0.5) * 40;
       const magneticY = (clientY / window.innerHeight - 0.5) * 40;
-      
-      setMousePosition({
-        x: magneticX,
-        y: magneticY,
-      });
-
+      setMousePosition({ x: magneticX, y: magneticY });
       setMagneticHover({
         x: (clientX / window.innerWidth - 0.5) * 20,
         y: (clientY / window.innerHeight - 0.5) * 20,
@@ -127,10 +113,7 @@ export function Projects() {
           }
         });
       },
-      {
-        threshold: 0.1,
-        rootMargin: '-80px 0px -80px 0px'
-      }
+      { threshold: 0.1, rootMargin: '-80px 0px -80px 0px' }
     );
 
     projectRefs.current.forEach((ref) => {
@@ -158,28 +141,6 @@ export function Projects() {
     };
   }, [filteredProjects]);
 
-  // Advanced scroll progress with parallax layers
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      
-      const section = sectionRef.current;
-      const scrollTop = window.scrollY;
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      const windowHeight = window.innerHeight;
-
-      const progress = (scrollTop - sectionTop + windowHeight * 0.2) / (sectionHeight - windowHeight * 0.4);
-      setScrollProgress(Math.max(0, Math.min(1, progress)));
-    };
-
-    const throttledScroll = throttle(handleScroll, 16);
-    window.addEventListener('scroll', throttledScroll);
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', throttledScroll);
-  }, []);
-
   // Video control functions
   const toggleVideo = (projectId: number) => {
     if (activeVideo === projectId) {
@@ -190,18 +151,6 @@ export function Projects() {
       setIsPlaying(true);
     }
   };
-
-  // Utility function for throttle
-  function throttle<T extends (...args: any[]) => any>(func: T, limit: number): T {
-    let inThrottle: boolean;
-    return ((...args: Parameters<T>) => {
-      if (!inThrottle) {
-        func(...args);
-        inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
-      }
-    }) as T;
-  }
 
   // Reset visible projects when category changes
   useEffect(() => {
@@ -216,47 +165,32 @@ export function Projects() {
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div 
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/30 to-purple-600/30 rounded-full blur-3xl animate-float-3d"
-          style={{
-            transform: `translate3d(${mousePosition.x * 0.3}px, ${mousePosition.y * 0.3}px, 0) rotate(${scrollProgress * 360}deg)`,
-          }}
         />
         <div 
           className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/30 to-emerald-500/30 rounded-full blur-3xl animate-float-3d delay-2000"
-          style={{
-            transform: `translate3d(${mousePosition.x * 0.2}px, ${mousePosition.y * 0.2}px, 0) rotate(${scrollProgress * -360}deg)`,
-          }}
         />
         <div 
           className="absolute top-1/2 left-1/2 w-80 h-80 bg-gradient-to-r from-violet-500/20 to-pink-500/20 rounded-full blur-3xl animate-float-3d delay-1000"
-          style={{
-            transform: `translate3d(${mousePosition.x * 0.4}px, ${mousePosition.y * 0.4}px, 0) scale(${1 + scrollProgress * 0.5})`,
-          }}
         />
         
         {/* Grid Overlay */}
         <div 
           className="absolute inset-0 opacity-10"
           style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                             linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
             backgroundSize: '50px 50px',
-            transform: `translate3d(${mousePosition.x * -0.1}px, ${mousePosition.y * -0.1}px, 0)`,
           }}
         />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Advanced Header Section */}
-        <div 
-          ref={titleRef}
-          className="mb-20 text-center opacity-0"
-        >
+        <div ref={titleRef} className="mb-20 text-center opacity-0">
           <div className="inline-flex items-center gap-3 text-sm text-blue-400 bg-blue-500/10 px-5 py-3 rounded-2xl mb-8 border border-blue-500/20 backdrop-blur-xl animate-glow">
             <div className="w-2 h-2 bg-blue-400 rounded-full animate-ping" />
             <span className="font-medium">Featured Projects</span>
             <div className="w-2 h-2 bg-cyan-400 rounded-full animate-ping delay-1000" />
           </div>
-          
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 tracking-tighter">
             <span className="bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
               ARCHI
@@ -264,25 +198,18 @@ export function Projects() {
             <br />
             <span 
               className="bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent animate-gradient-x"
-              style={{
-                backgroundSize: '200% 200%',
-              }}
+              style={{ backgroundSize: '200% 200%' }}
             >
               TECTURE
             </span>
           </h1>
-          
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-light">
-            Redefining boundaries through <span className="text-blue-400 font-medium">innovative design</span>, 
-            sustainable solutions, and cutting-edge technology that transforms spaces into experiences.
+            Redefining boundaries through <span className="text-blue-400 font-medium">innovative design</span>, sustainable solutions, and cutting-edge technology that transforms spaces into experiences.
           </p>
         </div>
 
         {/* Advanced Control Bar */}
-        <div 
-          ref={filterRef}
-          className="flex flex-col lg:flex-row justify-between items-center gap-6 mb-16 p-6 bg-gray-900/30 rounded-3xl border border-gray-700/50 backdrop-blur-xl opacity-0"
-        >
+        <div ref={filterRef} className="flex flex-col lg:flex-row justify-between items-center gap-6 mb-16 p-6 bg-gray-900/30 rounded-3xl border border-gray-700/50 backdrop-blur-xl opacity-0">
           <div className="flex flex-wrap gap-3">
             {categories.map((category) => (
               <button
@@ -293,9 +220,6 @@ export function Projects() {
                     ? "bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-2xl shadow-blue-500/30"
                     : "bg-gray-800/50 text-gray-400 hover:text-white border border-gray-600/50 hover:border-gray-500 backdrop-blur-sm"
                 }`}
-                style={{
-                  transform: `translate3d(${magneticHover.x * 0.1}px, ${magneticHover.y * 0.1}px, 0)`,
-                }}
               >
                 <span className="relative z-10 text-sm tracking-wide">{category}</span>
                 {selectedCategory === category && (
@@ -327,24 +251,6 @@ export function Projects() {
           </div>
         </div>
 
-        {/* Advanced Scroll Progress Indicator */}
-        <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 hidden lg:block">
-          <div className="flex flex-col items-center gap-4">
-            <div className="bg-gray-800/50 backdrop-blur-xl rounded-2xl p-3 border border-gray-600/50">
-              <ArrowUp className="h-4 w-4 text-blue-400 animate-bounce" />
-            </div>
-            <div className="h-40 bg-gray-700/50 rounded-2xl w-2 overflow-hidden backdrop-blur-xl border border-gray-600/50">
-              <div 
-                className="bg-gradient-to-b from-blue-500 via-cyan-500 to-emerald-500 w-full rounded-2xl transition-all duration-300"
-                style={{ height: `${scrollProgress * 100}%` }}
-              />
-            </div>
-            <div className="bg-gray-800/50 backdrop-blur-xl rounded-2xl p-3 border border-gray-600/50">
-              <ArrowDown className="h-4 w-4 text-cyan-400 animate-bounce delay-1000" />
-            </div>
-          </div>
-        </div>
-
         {/* Advanced Projects Grid */}
         <div className={`space-y-32 max-w-full ${
           viewMode === 'masonry' ? 'columns-1 lg:columns-2 gap-8' : ''
@@ -359,9 +265,7 @@ export function Projects() {
               className={`group relative min-h-[90vh] flex items-center transition-all duration-1000 ${
                 viewMode === 'masonry' ? 'break-inside-avoid mb-8' : ''
               } ${
-                visibleProjects.includes(index) 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-20'
+                visibleProjects.includes(index) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
               }`}
               style={{
                 transitionDelay: visibleProjects.includes(index) ? `${index * 200}ms` : '0ms',
@@ -371,19 +275,15 @@ export function Projects() {
               {/* Advanced Project Card */}
               <div className={`w-full ${
                 viewMode === 'grid' ? 'grid lg:grid-cols-2 gap-16 items-center' : ''
-              } ${viewMode === 'masonry' ? 'bg-gray-900/30 rounded-3xl p-8 border border-gray-700/50 backdrop-blur-xl' : ''}`}>
-                
+              } ${
+                viewMode === 'masonry' ? 'bg-gray-900/30 rounded-3xl p-8 border border-gray-700/50 backdrop-blur-xl' : ''
+              }`}>
                 {/* Enhanced Media Section */}
-                <div 
-                  className={`relative group/card ${
-                    viewMode === 'grid' && index % 2 === 1 ? 'lg:col-start-2' : ''
-                  } ${
-                    viewMode === 'masonry' ? 'mb-8' : ''
-                  }`}
-                  style={{
-                    transform: `perspective(1000px) rotateY(${magneticHover.x * 0.5}deg) rotateX(${magneticHover.y * -0.5}deg) translateZ(${scrollProgress * 50}px)`,
-                  }}
-                >
+                <div className={`relative group/card ${
+                  viewMode === 'grid' && index % 2 === 1 ? 'lg:col-start-2' : ''
+                } ${
+                  viewMode === 'masonry' ? 'mb-8' : ''
+                }`}>
                   <div className="relative h-96 lg:h-[600px] rounded-3xl overflow-hidden">
                     {/* Video/Image Toggle */}
                     {activeVideo === project.id ? (
@@ -407,20 +307,22 @@ export function Projects() {
                         priority={index === 0}
                       />
                     )}
-                    
+
                     {/* Advanced Overlay System */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover/card:opacity-20 transition-all duration-500" />
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 opacity-0 group-hover/card:opacity-100 transition-all duration-500" />
-                    
+
                     {/* Interactive Controls */}
                     <div className="absolute top-6 left-6 z-20">
                       <div className="bg-black/60 backdrop-blur-xl rounded-2xl p-4 border border-white/10 animate-pulse">
-                        <div className="text-2xl font-bold text-white">{String(index + 1).padStart(2, '0')}</div>
+                        <div className="text-2xl font-bold text-white">
+                          {String(index + 1).padStart(2, '0')}
+                        </div>
                       </div>
                     </div>
 
                     <div className="absolute top-6 right-6 z-20 flex gap-3">
-                      <button 
+                      <button
                         onClick={() => toggleVideo(project.id)}
                         className="bg-black/60 backdrop-blur-xl rounded-2xl p-4 border border-white/10 hover:border-blue-500 hover:bg-blue-500/20 transition-all duration-300 group/btn hover:scale-110"
                       >
@@ -430,7 +332,10 @@ export function Projects() {
                           <Play className="h-5 w-5 text-white group-hover/btn:scale-110" />
                         )}
                       </button>
-                      <button title="ExternalLink" className="bg-black/60 backdrop-blur-xl rounded-2xl p-4 border border-white/10 hover:border-cyan-500 hover:bg-cyan-500/20 transition-all duration-300 group/btn hover:scale-110">
+                      <button
+                        title="ExternalLink"
+                        className="bg-black/60 backdrop-blur-xl rounded-2xl p-4 border border-white/10 hover:border-cyan-500 hover:bg-cyan-500/20 transition-all duration-300 group/btn hover:scale-110"
+                      >
                         <ExternalLink className="h-5 w-5 text-white group-hover/btn:scale-110" />
                       </button>
                     </div>
@@ -440,25 +345,15 @@ export function Projects() {
                   </div>
 
                   {/* Holographic Effect */}
-                  <div 
-                    className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-emerald-500/10 rounded-3xl blur-2xl -z-10 opacity-0 group-hover/card:opacity-100 transition-all duration-500"
-                    style={{
-                      transform: `translate3d(${magneticHover.x * 0.5}px, ${magneticHover.y * 0.5}px, 0)`,
-                    }}
-                  />
+                  <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-emerald-500/10 rounded-3xl blur-2xl -z-10 opacity-0 group-hover/card:opacity-100 transition-all duration-500" />
                 </div>
 
                 {/* Enhanced Content Section */}
-                <div 
-                  className={`space-y-8 ${
-                    viewMode === 'grid' && index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''
-                  } ${
-                    viewMode === 'masonry' ? 'bg-transparent' : 'bg-gray-900/30 rounded-3xl p-8 border border-gray-700/50 backdrop-blur-xl'
-                  }`}
-                  style={{
-                    transform: `perspective(1000px) rotateY(${magneticHover.x * -0.3}deg) rotateX(${magneticHover.y * 0.3}deg)`,
-                  }}
-                >
+                <div className={`space-y-8 ${
+                  viewMode === 'grid' && index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''
+                } ${
+                  viewMode === 'masonry' ? 'bg-transparent' : 'bg-gray-900/30 rounded-3xl p-8 border border-gray-700/50 backdrop-blur-xl'
+                }`}>
                   {/* Category and Meta with Advanced Animation */}
                   <div className="flex flex-wrap items-center gap-4">
                     <span className="text-blue-400 font-semibold text-sm bg-blue-500/20 px-4 py-2 rounded-2xl border border-blue-500/30 backdrop-blur-sm">
@@ -493,9 +388,7 @@ export function Projects() {
                       <span
                         key={spec}
                         className="px-4 py-2 rounded-2xl bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 text-gray-300 text-sm font-medium backdrop-blur-sm hover:border-blue-500 hover:from-blue-500/20 hover:to-cyan-500/20 transition-all duration-300 cursor-pointer hover:scale-105"
-                        style={{
-                          animationDelay: `${specIndex * 100}ms`
-                        }}
+                        style={{ animationDelay: `${specIndex * 100}ms` }}
                       >
                         {spec}
                       </span>
@@ -513,10 +406,7 @@ export function Projects() {
                       <span
                         key={tag}
                         className="px-4 py-2 rounded-2xl bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 text-gray-300 hover:text-white hover:border-cyan-500 hover:from-cyan-500/20 hover:to-blue-500/20 transition-all duration-300 cursor-pointer text-sm font-medium transform hover:scale-105 hover:-translate-y-1 backdrop-blur-sm"
-                        style={{
-                          transitionDelay: `${tagIndex * 50}ms`,
-                          transform: `translate3d(${magneticHover.x * 0.1}px, ${magneticHover.y * 0.1}px, 0)`,
-                        }}
+                        style={{ transitionDelay: `${tagIndex * 50}ms` }}
                       >
                         #{tag}
                       </span>
@@ -531,7 +421,7 @@ export function Projects() {
                         <ExternalLink className="h-4 w-4 group-hover/btn:scale-110 group-hover/btn:rotate-12 transition-transform duration-300" />
                       </span>
                     </Button>
-                    <Button 
+                    <Button
                       variant="outline"
                       className="border-gray-600 text-gray-400 hover:text-white hover:border-gray-500 px-7 py-4 rounded-2xl font-semibold backdrop-blur-sm transform hover:-translate-y-1 transition-all duration-300 hover:scale-105"
                     >
@@ -552,10 +442,7 @@ export function Projects() {
         {/* Advanced Footer Section */}
         <div className="flex flex-col text-center mt-24 space-y-8">
           <div className="inline-flex flex-col items-center gap-4 text-gray-400">
-            <div className="w-8 h-8 border-2 border-gray-600 rounded-full animate-bounce flex items-center justify-center">
-              <ArrowDown className="h-3 w-3" />
-            </div>
-            <span className="text-sm font-medium tracking-wider">CONTINUE EXPLORING</span>
+            <span className="text-sm font-medium tracking-wider">THANK YOU FOR EXPLORING</span>
           </div>
         </div>
       </div>
@@ -563,44 +450,24 @@ export function Projects() {
       {/* Advanced CSS Animations */}
       <style jsx>{`
         @keyframes float-3d {
-          0%, 100% {
-            transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
-          }
-          33% {
-            transform: translate3d(30px, -30px, 0) rotate(120deg) scale(1.1);
-          }
-          66% {
-            transform: translate3d(-20px, 20px, 0) rotate(240deg) scale(0.9);
-          }
+          0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+          33% { transform: translate3d(30px, -30px, 0) rotate(120deg) scale(1.1); }
+          66% { transform: translate3d(-20px, 20px, 0) rotate(240deg) scale(0.9); }
         }
         
         @keyframes advanced-slide {
-          0% {
-            opacity: 0;
-            transform: translate3d(0, 80px, 0) rotateX(10deg);
-          }
-          100% {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) rotateX(0deg);
-          }
+          0% { opacity: 0; transform: translate3d(0, 80px, 0) rotateX(10deg); }
+          100% { opacity: 1; transform: translate3d(0, 0, 0) rotateX(0deg); }
         }
         
         @keyframes gradient-x {
-          0%, 100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
         }
         
         @keyframes glow {
-          0%, 100% {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-          }
-          50% {
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(6, 182, 212, 0.6);
-          }
+          0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+          50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(6, 182, 212, 0.6); }
         }
         
         .animate-float-3d {
