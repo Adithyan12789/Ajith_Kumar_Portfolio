@@ -66,7 +66,7 @@ export function Hero() {
             </div>
 
             {/* About Me */}
-            <div className="animate-slide-up animate-stagger-2 mb-10">
+            <div className="animate-slide-up animate-stagger-2 mb-12">
               <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">
                 About Me
               </h2>
@@ -112,7 +112,7 @@ export function Hero() {
             </div>
 
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-8 animate-slide-up animate-stagger-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-8 animate-slide-up animate-stagger-4 mt-4">
               {/* Social Icons */}
               <div className="flex items-center space-x-3 gap-4">
                 {[Facebook, Linkedin, Instagram, Mail].map((Icon, i) => (
