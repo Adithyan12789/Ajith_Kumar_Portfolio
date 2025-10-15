@@ -2,9 +2,179 @@
 
 import { ScrollReveal } from "./scroll-reveal";
 import { LiquidEtherBackground } from "./3d-background";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 // import "../app/globals.css"
+
+// Define TypeScript interfaces
+interface AnimatedNumberProps {
+  value: number;
+  duration?: number;
+  className?: string;
+}
+
+interface FloatingNumberProps {
+  value: number;
+  suffix?: string;
+  duration?: number;
+}
+
+interface AnimatedStarRatingProps {
+  rating?: number;
+  duration?: number;
+}
+
+interface ButtonDetails {
+  title: string;
+  details: (isActive: boolean) => React.ReactNode;
+  gradient: string;
+  accent: string;
+}
+
+// Animated Number Component
+const AnimatedNumber = ({ value, duration = 2000, className = "" }: AnimatedNumberProps) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    setIsAnimating(true);
+    const startTime = Date.now();
+    
+    const animate = () => {
+      const now = Date.now();
+      const progress = Math.min((now - startTime) / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentValue = Math.floor(easeOutQuart * value);
+      
+      setDisplayValue(currentValue);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setDisplayValue(value);
+        setIsAnimating(false);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [value, duration]);
+
+  return (
+    <span className={`relative ${className} ${isAnimating ? 'animate-pulse' : ''}`}>
+      {displayValue.toLocaleString()}
+      {isAnimating && (
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
+      )}
+    </span>
+  );
+};
+
+// Floating Number Component
+const FloatingNumber = ({ value, suffix = "", duration = 1500 }: FloatingNumberProps) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  const [floatValue, setFloatValue] = useState(0);
+
+  useEffect(() => {
+    const startTime = Date.now();
+    
+    const animate = () => {
+      const now = Date.now();
+      const progress = Math.min((now - startTime) / duration, 1);
+      
+      // Easing function
+      const easeOutBack = 1 - Math.pow(1 - progress, 4);
+      const currentValue = Math.floor(easeOutBack * value);
+      
+      setDisplayValue(currentValue);
+      setFloatValue(easeOutBack);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setDisplayValue(value);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [value, duration]);
+
+  return (
+    <div className="relative">
+      <span 
+        className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"
+        style={{
+          transform: `scale(${1 + floatValue * 0.2})`,
+          transition: 'transform 0.1s ease-out'
+        }}
+      >
+        {suffix}{displayValue}
+      </span>
+      <div 
+        className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur opacity-30"
+        style={{
+          transform: `scale(${1 + floatValue * 0.3})`,
+          transition: 'transform 0.1s ease-out'
+        }}
+      />
+    </div>
+  );
+};
+
+// Star Rating with Count-up
+const AnimatedStarRating = ({ rating = 4.9, duration = 2000 }: AnimatedStarRatingProps) => {
+  const [displayRating, setDisplayRating] = useState(0);
+
+  useEffect(() => {
+    const startTime = Date.now();
+    
+    const animate = () => {
+      const now = Date.now();
+      const progress = Math.min((now - startTime) / duration, 1);
+      
+      // Easing function
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentRating = Number((easeOutQuart * rating).toFixed(1));
+      
+      setDisplayRating(currentRating);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [rating, duration]);
+
+  return (
+    <div className="flex flex-col items-center justify-center space-y-2">
+      <div className="flex items-center justify-center space-x-1">
+        {[...Array(5)].map((_, i) => (
+          <svg
+            key={i}
+            className="w-6 h-6 text-yellow-400 fill-current animate-bounce"
+            style={{ 
+              animationDelay: `${i * 0.1}s`,
+              filter: displayRating >= i + 1 ? 'drop-shadow(0 0 8px rgb(234, 179, 8))' : 'none'
+            }}
+            viewBox="0 0 20 20"
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        ))}
+      </div>
+      <div className="text-center animate-scale-in">
+        <span className="text-lg font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+          {displayRating.toFixed(1)}/5
+        </span>
+        <p className="text-xs text-slate-300 mt-1 animate-fade-in">
+          Industry Rating
+        </p>
+      </div>
+    </div>
+  );
+};
 
 const services = [
   {
@@ -61,45 +231,109 @@ const services = [
   },
 ];
 
-const Buttons = [
+const Buttons: ButtonDetails[] = [
   {
     title: "Experience",
-    details: "2+",
+    details: (isActive: boolean) => (
+      <div className="flex flex-col items-center justify-center space-y-2">
+        <div className="relative">
+          {isActive ? (
+            <AnimatedNumber 
+              value={2} 
+              duration={1500}
+              className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+            />
+          ) : (
+            <span className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              2+
+            </span>
+          )}
+          <div className="absolute inset-0 text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent animate-ping opacity-20">
+            2+
+          </div>
+        </div>
+        <span className="text-sm text-slate-300 font-medium animate-slide-up">
+          Years of Excellence
+        </span>
+      </div>
+    ),
     gradient: "from-blue-500/20 to-purple-600/20",
     accent: "blue",
   },
   {
     title: "Works",
-    details: "+50",
+    details: (isActive: boolean) => (
+      <div className="flex flex-col items-center justify-center space-y-2">
+        {isActive ? (
+          <FloatingNumber value={50} suffix="+" duration={1800} />
+        ) : (
+          <div className="relative">
+            <span className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+              +50
+            </span>
+            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur opacity-30 animate-pulse"></div>
+          </div>
+        )}
+        <span className="text-sm text-slate-300 font-medium animate-slide-up">
+          Projects Completed
+        </span>
+      </div>
+    ),
     gradient: "from-emerald-500/20 to-cyan-600/20",
     accent: "emerald",
   },
   {
     title: "Feedback",
-    details: "+12",
+    details: (isActive: boolean) => (
+      <div className="flex flex-col items-center justify-center space-y-2">
+        <div className="relative">
+        {isActive ? (
+          <FloatingNumber value={12} suffix="+" duration={1800} />
+        ) : (
+          <div className="relative">
+            <span className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+              +12
+            </span>
+            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur opacity-30 animate-pulse"></div>
+          </div>
+        )}
+        </div>
+        <span className="text-sm text-slate-300 font-medium animate-slide-up">
+          Happy Clients
+        </span>
+      </div>
+    ),
     gradient: "from-green-500/20 to-teal-600/20",
     accent: "green",
   },
   {
     title: "Rate us",
-    details: (
-      <div className="flex flex-col items-center justify-center space-y-2">
-        <div className="flex items-center justify-center space-x-1">
-          {[...Array(5)].map((_, i) => (
-            <svg
-              key={i}
-              className="w-6 h-6 text-yellow-400 fill-current animate-pulse"
-              style={{ animationDelay: `${i * 0.1}s` }}
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-          ))}
+    details: (isActive: boolean) => (
+      isActive ? (
+        <AnimatedStarRating rating={4.9} duration={2000} />
+      ) : (
+        <div className="flex flex-col items-center justify-center space-y-2">
+          <div className="flex items-center justify-center space-x-1">
+            {[...Array(5)].map((_, i) => (
+              <svg
+                key={i}
+                className="w-6 h-6 text-yellow-400 fill-current"
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+          <div className="text-center">
+            <span className="text-lg font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+              4.9/5
+            </span>
+            <p className="text-xs text-slate-300 mt-1">
+              Industry Rating
+            </p>
+          </div>
         </div>
-        <div className="text-center">
-          <span className="text-sm font-bold text-yellow-400">4.9/5</span>
-        </div>
-      </div>
+      )
     ),
     gradient: "from-orange-500/20 to-red-600/20",
     accent: "orange",
@@ -109,9 +343,7 @@ const Buttons = [
 export function Services() {
   const router = useRouter();
 
-  const [flippedCards, setFlippedCards] = useState<{ [key: number]: boolean }>(
-    {}
-  );
+  const [flippedCards, setFlippedCards] = useState<{ [key: number]: boolean }>({});
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const [activeButtons, setActiveButtons] = useState<{ [key: number]: boolean }>({});
@@ -195,6 +427,7 @@ export function Services() {
     };
     return colors[accent as keyof typeof colors] || colors.blue;
   };
+
 
   return (
     <section
@@ -481,9 +714,9 @@ export function Services() {
                         : "opacity-0 translate-y-4 scale-95"
                     }`}
                   >
-                    <span className="text-sm font-medium text-slate-200 leading-tight">
-                      {btn.details}
-                    </span>
+                    <div className="text-center w-full">
+                      {btn.details(activeButtons[index])}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -583,6 +816,46 @@ export function Services() {
           }
         }
 
+        @keyframes slide-up {
+          0% {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes scale-in {
+          0% {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes fade-in {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
+        }
+
         .animate-float-slow {
           animation: float-slow 20s ease-in-out infinite;
         }
@@ -593,6 +866,22 @@ export function Services() {
 
         .animate-pulse-slow {
           animation: pulse-slow 4s ease-in-out infinite;
+        }
+
+        .animate-slide-up {
+          animation: slide-up 0.6s ease-out forwards;
+        }
+
+        .animate-scale-in {
+          animation: scale-in 0.5s ease-out forwards;
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.8s ease-out forwards;
+        }
+
+        .animate-shimmer {
+          animation: shimmer 1.5s ease-in-out infinite;
         }
 
         /* Smooth transitions for 3D effects */
