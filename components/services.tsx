@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 const services = [
   {
     title: "Architectural Design",
-    description: "Innovative architectural solutions tailored to your vision",
     details:
       "From concept to completion, we create stunning architectural designs that blend form and function while meeting all regulatory requirements.",
     features: [
@@ -23,7 +22,6 @@ const services = [
   },
   {
     title: "Interior Design",
-    description: "Creating beautiful and functional interior spaces",
     details:
       "Transform your spaces with our interior design expertise. We focus on aesthetics, functionality, and creating environments that reflect your personality.",
     features: [
@@ -37,7 +35,6 @@ const services = [
   },
   {
     title: "Sustainable Design",
-    description: "Eco-friendly designs for a sustainable future",
     details:
       "Our sustainable approach integrates green technologies and materials to create energy-efficient, environmentally responsible buildings.",
     features: [
@@ -51,7 +48,6 @@ const services = [
   },
   {
     title: "Project Management",
-    description: "End-to-end project coordination and execution",
     details:
       "We manage your project from initial concept through construction, ensuring timelines, budgets, and quality standards are met.",
     features: [
@@ -216,7 +212,7 @@ export function Services() {
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header Section */}
         <ScrollReveal className="text-center mb-16">
-          <div className="animate-slide-up text-left w-full max-w-md mr-auto">
+          <div className="animate-slide-up text-left w-full max-w-m mr-auto">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-foreground bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
               Services
             </h2>
@@ -224,7 +220,7 @@ export function Services() {
         </ScrollReveal>
 
         {/* Advanced Flipping Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center w-full">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center w-full ">
           {services.map((service, index) => (
             <div
               key={service.title}
@@ -316,9 +312,6 @@ export function Services() {
                           >
                             {service.title}
                           </h3>
-                          <p className="text-slate-300 text-sm leading-relaxed group-hover:text-slate-200 transition-all duration-300">
-                            {service.description}
-                          </p>
                         </div>
 
                         {/* Animated CTA */}
@@ -435,7 +428,7 @@ export function Services() {
         </div>
 
         {/* Enhanced Buttons Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center w-full mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center w-full mt-10">
           {Buttons.map((btn, index) => (
             <button
               key={index}
