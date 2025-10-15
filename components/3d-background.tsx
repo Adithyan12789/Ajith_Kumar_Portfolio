@@ -2,6 +2,7 @@
 import Spline from "@splinetool/react-spline";
 import LightRays from "./reactBits/LightRays";
 import PixelBlast from "./reactBits/PixelBlast";
+import LiquidEther from "./reactBits/LiquidEther";
 
 export function HeroSpline3DBackground() {
   return (
@@ -37,7 +38,7 @@ export function ServiceSpline3DBackground() {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none">
       <Spline
-        scene="https://prod.spline.design/jj0CesQLAr3YN6pg/scene.splinecode" 
+        scene="https://prod.spline.design/jj0CesQLAr3YN6pg/scene.splinecode"
         className="w-full h-full"
         style={{
           mixBlendMode: "normal",
@@ -62,6 +63,34 @@ export function LightRaysBackground() {
         noiseAmount={0.1}
         distortion={0.05}
         className="custom-rays"
+      />
+    </div>
+  );
+}
+
+export function LiquidEtherBackground() {
+  return (
+    <div className="absolute inset-0 z-0">
+      {/* Remove pointer-events-none to allow background to receive interactions */}
+      <LiquidEther
+        colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+        mouseForce={20}
+        cursorSize={100}
+        isViscous={false}
+        viscous={30}
+        iterationsViscous={32}
+        iterationsPoisson={32}
+        resolution={0.5}
+        isBounce={false}
+        autoDemo={true}
+        autoSpeed={0.5}
+        autoIntensity={2.2}
+        takeoverDuration={0.25}
+        autoResumeDelay={3000}
+        autoRampDuration={0.6}
+        // Add these props to ensure it always runs
+        style={{ pointerEvents: "auto" }}
+        className="liquid-ether-bg"
       />
     </div>
   );

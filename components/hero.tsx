@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight,Facebook, Linkedin, Instagram, Mail, FileText } from "lucide-react";
+import { ArrowRight, Facebook, Linkedin, Instagram, Mail, FileText } from "lucide-react";
 import { ParticleBackground } from "./particle-background";
 import Spline, {
   HeroSpline3DBackground,
@@ -111,20 +111,37 @@ export function Hero() {
               </p>
             </div>
 
-
             <div className="flex flex-col sm:flex-row items-center justify-between gap-8 animate-slide-up animate-stagger-4 mt-4">
               {/* Social Icons */}
               <div className="flex items-center space-x-3 gap-4">
-                {[Facebook, Linkedin, Instagram, Mail].map((Icon, i) => (
-                  <a
-                    title="icon"
-                    key={i}
-                    href="#"
-                    className="group p-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25"
-                  >
-                    <Icon className="h-4 w-4 text-white group-hover:text-blue-300 transition-colors duration-200" />
-                  </a>
-                ))}
+                <a
+                  title="Facebook"
+                  href="#"
+                  className="group p-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25"
+                >
+                  <Facebook className="h-4 w-4 text-[#1877F2] group-hover:scale-110 transition-transform duration-200" />
+                </a>
+                <a
+                  title="LinkedIn"
+                  href="#"
+                  className="group p-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-blue-500/25"
+                >
+                  <Linkedin className="h-4 w-4 text-[#0A66C2] group-hover:scale-110 transition-transform duration-200" />
+                </a>
+                <a
+                  title="Instagram"
+                  href="#"
+                  className="group p-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/25"
+                >
+                  <Instagram className="h-4 w-4 text-[#E4405F] group-hover:scale-110 transition-transform duration-200" />
+                </a>
+                <a
+                  title="Email"
+                  href="#"
+                  className="group p-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-red-500/25"
+                >
+                  <Mail className="h-4 w-4 text-[#EA4335] group-hover:scale-110 transition-transform duration-200" />
+                </a>
               </div>
 
               {/* Download CV Button */}
@@ -133,7 +150,7 @@ export function Hero() {
                   variant="outline"
                   className="group px-5 py-2 text-sm bg-transparent border-2 hover-scale hover-bounce"
                 >
-                  <FileText className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-200" />
+                  <FileText className="mr-2 h-4 w-4 text-white group-hover:scale-110 transition-transform duration-200" />
                   Portfolio
                 </Button>
               </div>
