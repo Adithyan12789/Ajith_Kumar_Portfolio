@@ -32,24 +32,28 @@ interface ButtonDetails {
 }
 
 // Animated Number Component
-const AnimatedNumber = ({ value, duration = 2000, className = "" }: AnimatedNumberProps) => {
+const AnimatedNumber = ({
+  value,
+  duration = 2000,
+  className = "",
+}: AnimatedNumberProps) => {
   const [displayValue, setDisplayValue] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     setIsAnimating(true);
     const startTime = Date.now();
-    
+
     const animate = () => {
       const now = Date.now();
       const progress = Math.min((now - startTime) / duration, 1);
-      
+
       // Easing function for smooth animation
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       const currentValue = Math.floor(easeOutQuart * value);
-      
+
       setDisplayValue(currentValue);
-      
+
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
@@ -57,12 +61,14 @@ const AnimatedNumber = ({ value, duration = 2000, className = "" }: AnimatedNumb
         setIsAnimating(false);
       }
     };
-    
+
     requestAnimationFrame(animate);
   }, [value, duration]);
 
   return (
-    <span className={`relative ${className} ${isAnimating ? 'animate-pulse' : ''}`}>
+    <span
+      className={`relative ${className} ${isAnimating ? "animate-pulse" : ""}`}
+    >
       {displayValue.toLocaleString()}
       {isAnimating && (
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
@@ -72,50 +78,55 @@ const AnimatedNumber = ({ value, duration = 2000, className = "" }: AnimatedNumb
 };
 
 // Floating Number Component
-const FloatingNumber = ({ value, suffix = "", duration = 1500 }: FloatingNumberProps) => {
+const FloatingNumber = ({
+  value,
+  suffix = "",
+  duration = 1500,
+}: FloatingNumberProps) => {
   const [displayValue, setDisplayValue] = useState(0);
   const [floatValue, setFloatValue] = useState(0);
 
   useEffect(() => {
     const startTime = Date.now();
-    
+
     const animate = () => {
       const now = Date.now();
       const progress = Math.min((now - startTime) / duration, 1);
-      
+
       // Easing function
       const easeOutBack = 1 - Math.pow(1 - progress, 4);
       const currentValue = Math.floor(easeOutBack * value);
-      
+
       setDisplayValue(currentValue);
       setFloatValue(easeOutBack);
-      
+
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
         setDisplayValue(value);
       }
     };
-    
+
     requestAnimationFrame(animate);
   }, [value, duration]);
 
   return (
     <div className="relative">
-      <span 
+      <span
         className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent"
         style={{
           transform: `scale(${1 + floatValue * 0.2})`,
-          transition: 'transform 0.1s ease-out'
+          transition: "transform 0.1s ease-out",
         }}
       >
-        {suffix}{displayValue}
+        {suffix}
+        {displayValue}
       </span>
-      <div 
+      <div
         className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur opacity-30"
         style={{
           transform: `scale(${1 + floatValue * 0.3})`,
-          transition: 'transform 0.1s ease-out'
+          transition: "transform 0.1s ease-out",
         }}
       />
     </div>
@@ -123,27 +134,30 @@ const FloatingNumber = ({ value, suffix = "", duration = 1500 }: FloatingNumberP
 };
 
 // Star Rating with Count-up
-const AnimatedStarRating = ({ rating = 4.9, duration = 2000 }: AnimatedStarRatingProps) => {
+const AnimatedStarRating = ({
+  rating = 4.9,
+  duration = 2000,
+}: AnimatedStarRatingProps) => {
   const [displayRating, setDisplayRating] = useState(0);
 
   useEffect(() => {
     const startTime = Date.now();
-    
+
     const animate = () => {
       const now = Date.now();
       const progress = Math.min((now - startTime) / duration, 1);
-      
+
       // Easing function
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       const currentRating = Number((easeOutQuart * rating).toFixed(1));
-      
+
       setDisplayRating(currentRating);
-      
+
       if (progress < 1) {
         requestAnimationFrame(animate);
       }
     };
-    
+
     requestAnimationFrame(animate);
   }, [rating, duration]);
 
@@ -154,9 +168,12 @@ const AnimatedStarRating = ({ rating = 4.9, duration = 2000 }: AnimatedStarRatin
           <svg
             key={i}
             className="w-6 h-6 text-yellow-400 fill-current animate-bounce"
-            style={{ 
+            style={{
               animationDelay: `${i * 0.1}s`,
-              filter: displayRating >= i + 1 ? 'drop-shadow(0 0 8px rgb(234, 179, 8))' : 'none'
+              filter:
+                displayRating >= i + 1
+                  ? "drop-shadow(0 0 8px rgb(234, 179, 8))"
+                  : "none",
             }}
             viewBox="0 0 20 20"
           >
@@ -179,52 +196,58 @@ const AnimatedStarRating = ({ rating = 4.9, duration = 2000 }: AnimatedStarRatin
 const services = [
   {
     title: "Architectural Design",
-    details:
-      "From concept to completion, we create stunning architectural designs that blend form and function while meeting all regulatory requirements.",
     features: [
-      "3D Modeling",
-      "Construction Documents",
-      "Site Planning",
-      "Code Compliance",
+      "Concept",
+      "Site analysis",
+      "Sketches",
+      "Material analysis",
+      "Orientation",
+      "Feasibility",
+      "Landscaping",
     ],
     gradient: "from-blue-500/20 to-purple-600/20",
     accent: "blue",
   },
   {
     title: "Interior Design",
-    details:
-      "Transform your spaces with our interior design expertise. We focus on aesthetics, functionality, and creating environments that reflect your personality.",
     features: [
-      "Space Planning",
-      "Material Selection",
-      "Furniture Design",
-      "Lighting Solutions",
+      "Concept",
+      "Material board",
+      "Mood board",
+      "Inspiration board",
+      "Furniture layout",
+      "Color theme",
+      "Presentations",
     ],
     gradient: "from-emerald-500/20 to-cyan-600/20",
     accent: "emerald",
   },
   {
-    title: "Sustainable Design",
-    details:
-      "Our sustainable approach integrates green technologies and materials to create energy-efficient, environmentally responsible buildings.",
+    title: "Working Drawings",
     features: [
-      "LEED Certification",
-      "Energy Analysis",
-      "Green Materials",
-      "Passive Design",
+      "Plan",
+      "Sections",
+      "Elevations",
+      "Centerline plan",
+      "Dimension plan",
+      "Electrical drawing",
+      "Plumbing drawing",
+      "Site plan",
+      "Interior elevation",
+      "Interior sections",
     ],
     gradient: "from-green-500/20 to-teal-600/20",
     accent: "green",
   },
   {
-    title: "Project Management",
-    details:
-      "We manage your project from initial concept through construction, ensuring timelines, budgets, and quality standards are met.",
+    title: "3D Visualizer",
     features: [
-      "Budget Management",
-      "Timeline Coordination",
-      "Quality Control",
-      "Stakeholder Communication",
+      "Exterior renders",
+      "Interior renders",
+      "Concept diagram",
+      "Landscaping",
+      "Lighting",
+      "Walkthroughs",
     ],
     gradient: "from-orange-500/20 to-red-600/20",
     accent: "orange",
@@ -238,8 +261,8 @@ const Buttons: ButtonDetails[] = [
       <div className="flex flex-col items-center justify-center space-y-2">
         <div className="relative">
           {isActive ? (
-            <AnimatedNumber 
-              value={2} 
+            <AnimatedNumber
+              value={2}
               duration={1500}
               className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
             />
@@ -287,16 +310,16 @@ const Buttons: ButtonDetails[] = [
     details: (isActive: boolean) => (
       <div className="flex flex-col items-center justify-center space-y-2">
         <div className="relative">
-        {isActive ? (
-          <FloatingNumber value={12} suffix="+" duration={1800} />
-        ) : (
-          <div className="relative">
-            <span className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-              +12
-            </span>
-            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur opacity-30 animate-pulse"></div>
-          </div>
-        )}
+          {isActive ? (
+            <FloatingNumber value={12} suffix="+" duration={1800} />
+          ) : (
+            <div className="relative">
+              <span className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                +12
+              </span>
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full blur opacity-30 animate-pulse"></div>
+            </div>
+          )}
         </div>
         <span className="text-sm text-slate-300 font-medium animate-slide-up">
           Happy Clients
@@ -308,7 +331,7 @@ const Buttons: ButtonDetails[] = [
   },
   {
     title: "Rate us",
-    details: (isActive: boolean) => (
+    details: (isActive: boolean) =>
       isActive ? (
         <AnimatedStarRating rating={4.9} duration={2000} />
       ) : (
@@ -328,13 +351,10 @@ const Buttons: ButtonDetails[] = [
             <span className="text-lg font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
               4.9/5
             </span>
-            <p className="text-xs text-slate-300 mt-1">
-              Industry Rating
-            </p>
+            <p className="text-xs text-slate-300 mt-1">Industry Rating</p>
           </div>
         </div>
-      )
-    ),
+      ),
     gradient: "from-orange-500/20 to-red-600/20",
     accent: "orange",
   },
@@ -343,11 +363,15 @@ const Buttons: ButtonDetails[] = [
 export function Services() {
   const router = useRouter();
 
-  const [flippedCards, setFlippedCards] = useState<{ [key: number]: boolean }>({});
+  const [flippedCards, setFlippedCards] = useState<{ [key: number]: boolean }>(
+    {}
+  );
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
-  const [activeButtons, setActiveButtons] = useState<{ [key: number]: boolean }>({});
-  
+  const [activeButtons, setActiveButtons] = useState<{
+    [key: number]: boolean;
+  }>({});
+
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const dropdownRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -428,11 +452,10 @@ export function Services() {
     return colors[accent as keyof typeof colors] || colors.blue;
   };
 
-
   return (
     <section
       id="services"
-      className="min-h-screen py-20 md:py-28 relative overflow-hidden"
+      className="min-h-screen relative overflow-hidden"
     >
       <LiquidEtherBackground />
 
@@ -442,314 +465,299 @@ export function Services() {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-float-reverse"></div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* Header Section */}
-        <ScrollReveal className="text-center mb-16">
-          <div className="animate-slide-up text-left w-full max-w-m mr-auto">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-foreground bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
-              Services
-            </h2>
-          </div>
-        </ScrollReveal>
+      <div className="container mx-auto px-6 lg:px-10 relative z-10">
+        <div className="space-y-6 relative z-20 mx-4 md:mx-8 lg:mx-10">
+          {/* Header Section */}
+          <ScrollReveal className="text-center mb-16">
+            <div className="animate-slide-up text-left w-full max-w-m mx-auto">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-foreground bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+                Services
+              </h2>
+            </div>
+          </ScrollReveal>
 
-        {/* Advanced Flipping Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center w-full ">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className="w-full flex flex-col items-center"
-            >
-              <ScrollReveal delay={index * 100} className="w-full">
-                <div
-                  ref={setCardRef(index)}
-                  className="advanced-card w-full h-120 cursor-pointer group relative"
-                  onClick={() => handleCardClick(index)}
-                  onMouseEnter={() => setHoveredCard(index)}
-                  onMouseMove={(e) => handleMouseMove(index, e)}
-                  onMouseLeave={() => handleMouseLeave(index)}
-                  style={{
-                    transformStyle: "preserve-3d",
-                  }}
-                >
-                  {/* Advanced Background Effects */}
-                  <div
-                    className={`card-bg-glow absolute inset-0 rounded-2xl bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-all duration-700 blur-xl`}
-                    style={{
-                      transform: "translateZ(-10px)",
-                    }}
-                  />
+          {/* Advanced Flipping Cards Grid */}
 
-                  {/* Animated Border Gradient */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center w-full mx-auto">
+            {services.map((service, index) => (
+              <div
+                key={service.title}
+                className="w-full flex flex-col items-center"
+              >
+                <ScrollReveal delay={index * 100} className="w-full">
                   <div
-                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: `linear-gradient(45deg, transparent, ${getAccentColor(
-                        service.accent
-                      )}, transparent)`,
-                      filter: "blur(8px)",
-                      transform: "translateZ(-5px)",
-                    }}
-                  />
-
-                  {/* Main Card Container */}
-                  <div
-                    className={`advanced-card-inner relative w-full h-full transition-all duration-600 ${
-                      flippedCards[index] ? "rotate-y-180" : ""
-                    }`}
+                    ref={setCardRef(index)}
+                    className="advanced-card w-full h-120 cursor-pointer group relative"
+                    onClick={() => handleCardClick(index)}
+                    onMouseEnter={() => setHoveredCard(index)}
+                    onMouseMove={(e) => handleMouseMove(index, e)}
+                    onMouseLeave={() => handleMouseLeave(index)}
                     style={{
                       transformStyle: "preserve-3d",
                     }}
                   >
-                    {/* Front of Card with Advanced Effects */}
+                    {/* Advanced Background Effects */}
                     <div
-                      className="advanced-card-front absolute w-full h-full backface-hidden rounded-2xl p-6 flex flex-col justify-center items-center text-center bg-gradient-to-br from-slate-900/90 to-black/90 border border-slate-700/30 shadow-2xl backdrop-blur-sm"
+                      className={`card-bg-glow absolute inset-0 rounded-2xl bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-all duration-700 blur-xl`}
                       style={{
-                        transform: "translateZ(1px)",
+                        transform: "translateZ(-10px)",
+                      }}
+                    />
+
+                    {/* Animated Border Gradient */}
+                    <div
+                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background: `linear-gradient(45deg, transparent, ${getAccentColor(
+                          service.accent
+                        )}, transparent)`,
+                        filter: "blur(8px)",
+                        transform: "translateZ(-5px)",
+                      }}
+                    />
+
+                    {/* Main Card Container */}
+                    <div
+                      className={`advanced-card-inner relative w-full h-full transition-all duration-600 ${
+                        flippedCards[index] ? "rotate-y-180" : ""
+                      }`}
+                      style={{
+                        transformStyle: "preserve-3d",
                       }}
                     >
-                      {/* Animated Background Pattern */}
+                      {/* Front of Card with Advanced Effects */}
                       <div
-                        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        className="advanced-card-front absolute w-full h-full backface-hidden rounded-2xl p-6 flex flex-col justify-center items-center text-center bg-gradient-to-br from-slate-900/90 to-black/90 border border-slate-700/30 shadow-2xl backdrop-blur-sm"
                         style={{
-                          background: `radial-gradient(circle at center, ${getAccentColor(
-                            service.accent
-                          )} 0%, transparent 70%)`,
-                          filter: "blur(40px)",
+                          transform: "translateZ(1px)",
                         }}
-                      />
+                      >
+                        {/* Animated Background Pattern */}
+                        <div
+                          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                          style={{
+                            background: `radial-gradient(circle at center, ${getAccentColor(
+                              service.accent
+                            )} 0%, transparent 70%)`,
+                            filter: "blur(40px)",
+                          }}
+                        />
 
-                      {/* Content Container */}
-                      <div className="relative z-10 w-full">
-                        {/* Floating Icon with Gradient Border */}
-                        <div className="relative mb-6">
-                          <div
-                            className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse-slow"
-                            style={{
-                              background: `linear-gradient(45deg, ${getAccentColor(
-                                service.accent
-                              )}, transparent)`,
-                              filter: "blur(12px)",
-                              transform: "scale(1.2)",
-                            }}
-                          />
-                          
+                        {/* Content Container */}
+                        <div className="relative z-10 w-full">
+                          {/* Floating Icon with Gradient Border */}
+                          <div className="relative mb-6">
+                            <div
+                              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse-slow"
+                              style={{
+                                background: `linear-gradient(45deg, ${getAccentColor(
+                                  service.accent
+                                )}, transparent)`,
+                                filter: "blur(12px)",
+                                transform: "scale(1.2)",
+                              }}
+                            />
+                          </div>
+
+                          {/* Text Content with Stagger Animation */}
+                          <div className="space-y-4">
+                            <h3
+                              className="text-xl font-bold text-white mb-3 group-hover:scale-105 transition-transform duration-300"
+                              style={{
+                                textShadow: "0 2px 10px rgba(0,0,0,0.3)",
+                              }}
+                            >
+                              {service.title}
+                            </h3>
+                          </div>
+
+                          {/* Animated CTA */}
+                          <div className="mt-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-600/30 group-hover:border-slate-400/50 transition-all duration-300">
+                              <span className="text-blue-400 text-sm font-medium">
+                                Click for more
+                              </span>
+                              <div className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300">
+                                <svg viewBox="0 0 16 16" fill="currentColor">
+                                  <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z" />
+                                </svg>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+                      </div>
 
-                        {/* Text Content with Stagger Animation */}
-                        <div className="space-y-4">
+                      {/* Back of Card with Enhanced Design */}
+                      <div
+                        className="advanced-card-back absolute w-full h-full backface-hidden rotate-y-180 rounded-2xl p-6 bg-gradient-to-br from-slate-800/90 to-slate-900/90 border border-slate-600/30 shadow-2xl backdrop-blur-sm overflow-hidden"
+                        style={{
+                          transform: "translateZ(1px) rotateY(180deg)",
+                        }}
+                      >
+                        {/* Animated Background */}
+                        <div
+                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                          style={{
+                            background: `linear-gradient(45deg, transparent, ${getAccentColor(
+                              service.accent
+                            )}10, transparent)`,
+                          }}
+                        />
+
+                        <div className="relative z-10 h-full flex flex-col justify-between">
                           <h3
-                            className="text-xl font-bold text-white mb-3 group-hover:scale-105 transition-transform duration-300"
+                            className="text-xl font-bold text-white mb-4 text-center group-hover:scale-105 transition-transform duration-300"
                             style={{
                               textShadow: "0 2px 10px rgba(0,0,0,0.3)",
                             }}
                           >
                             {service.title}
                           </h3>
-                        </div>
 
-                        {/* Animated CTA */}
-                        <div className="mt-6">
-                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-600/30 group-hover:border-slate-400/50 transition-all duration-300">
-                            <span className="text-blue-400 text-sm font-medium">
-                              Click for more
-                            </span>
-                            <div className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300">
-                              <svg viewBox="0 0 16 16" fill="currentColor">
-                                <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z" />
-                              </svg>
-                            </div>
+                          <div className="flex flex-col items-center gap-6">
+                            <ul className="flex flex-col items-start justify-center gap-2">
+                              {service.features.map((feature, featureIndex) => (
+                                <li
+                                  key={featureIndex}
+                                  className="flex items-center text-slate-300 text-md group-hover:text-slate-200 transition-all duration-300 hover:translate-x-2"
+                                >
+                                  <div className="relative mr-3">
+                                    <div
+                                      className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                      style={{
+                                        background: getAccentColor(
+                                          service.accent
+                                        ),
+                                        filter: "blur(8px)",
+                                      }}
+                                    />
+                                    <div
+                                      className="w-2 h-2 rounded-full relative"
+                                      style={{
+                                        backgroundColor: getAccentColor(
+                                          service.accent
+                                        ),
+                                      }}
+                                    />
+                                  </div>
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div className="pt-4 border-t border-slate-700/30 group-hover:border-slate-600/50 transition-colors duration-300">
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Back of Card with Enhanced Design */}
+                    {/* Advanced Border Effect */}
                     <div
-                      className="advanced-card-back absolute w-full h-full backface-hidden rotate-y-180 rounded-2xl p-6 bg-gradient-to-br from-slate-800/90 to-slate-900/90 border border-slate-600/30 shadow-2xl backdrop-blur-sm overflow-hidden"
+                      className="absolute inset-0 rounded-2xl border opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"
                       style={{
-                        transform: "translateZ(1px) rotateY(180deg)",
+                        border: `1px solid ${getAccentColor(service.accent)}`,
+                        filter: "blur(0.5px)",
+                        transform: "translateZ(2px)",
                       }}
+                    />
+                  </div>
+                </ScrollReveal>
+              </div>
+            ))}
+          </div>
+
+          {/* Enhanced Buttons Section */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center w-full mt-10">
+            {Buttons.map((btn, index) => (
+              <button
+                key={index}
+                onClick={() => handleButtonClick(index)}
+                className={`advanced-button w-full px-10 py-9 bg-gradient-to-br from-slate-900/90 to-black/90 hover:${btn.gradient} text-white rounded-2xl transition-all duration-500 hover:scale-105 active:scale-95 font-medium border border-slate-700/30 shadow-2xl backdrop-blur-sm relative overflow-hidden group`}
+                style={{
+                  transformStyle: "preserve-3d",
+                }}
+              >
+                {/* Button Background Effects */}
+                <div
+                  className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${btn.gradient} opacity-0 group-hover:opacity-100 transition-all duration-700 blur-xl`}
+                  style={{
+                    transform: "translateZ(-10px)",
+                  }}
+                />
+
+                {/* Animated Border */}
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: `linear-gradient(45deg, transparent, ${getAccentColor(
+                      btn.accent
+                    )}, transparent)`,
+                    filter: "blur(8px)",
+                  }}
+                />
+
+                {/* Content Container */}
+                <div className="relative z-10 w-full h-full flex items-center justify-center">
+                  <div className="text-center transition-all duration-500 transform">
+                    {/* Title - Hidden when active */}
+                    <div
+                      className={`transition-all duration-500 ${
+                        activeButtons[index]
+                          ? "opacity-0 -translate-y-4 scale-95"
+                          : "opacity-100 translate-y-0 scale-100"
+                      }`}
                     >
-                      {/* Animated Background */}
-                      <div
-                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{
-                          background: `linear-gradient(45deg, transparent, ${getAccentColor(
-                            service.accent
-                          )}10, transparent)`,
-                        }}
-                      />
+                      <span className="text-lg font-bold text-white">
+                        {btn.title}
+                      </span>
+                    </div>
 
-                      <div className="relative z-10 h-full flex flex-col">
-                        <h3
-                          className="text-xl font-bold text-white mb-4 text-center group-hover:scale-105 transition-transform duration-300"
-                          style={{
-                            textShadow: "0 2px 10px rgba(0,0,0,0.3)",
-                          }}
-                        >
-                          {service.title}
-                        </h3>
-
-                        <p className="text-slate-300 text-sm mb-6 leading-relaxed group-hover:text-slate-200 transition-colors duration-300">
-                          {service.details}
-                        </p>
-
-                        <div className="mb-6">
-                          <h4 className="text-blue-400 font-semibold text-sm mb-4 group-hover:text-blue-300 transition-colors duration-300">
-                            Core Features
-                          </h4>
-                          <ul className="space-y-3">
-                            {service.features.map((feature, featureIndex) => (
-                              <li
-                                key={featureIndex}
-                                className="flex items-center text-slate-300 text-sm group-hover:text-slate-200 transition-all duration-300 hover:translate-x-2"
-                              >
-                                <div className="relative mr-3">
-                                  <div
-                                    className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                                    style={{
-                                      background: getAccentColor(
-                                        service.accent
-                                      ),
-                                      filter: "blur(8px)",
-                                    }}
-                                  />
-                                  <div
-                                    className="w-2 h-2 rounded-full relative"
-                                    style={{
-                                      backgroundColor: getAccentColor(
-                                        service.accent
-                                      ),
-                                    }}
-                                  />
-                                </div>
-                                {feature}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        <div className="mt-auto pt-4 border-t border-slate-700/30 group-hover:border-slate-600/50 transition-colors duration-300">
-                          <div className="flex items-center justify-center gap-2 text-blue-400 text-sm font-medium group-hover:text-blue-300 transition-colors duration-300">
-                            <svg
-                              className="w-4 h-4 rotate-180"
-                              viewBox="0 0 16 16"
-                              fill="currentColor"
-                            >
-                              <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z" />
-                            </svg>
-                            Click to return
-                          </div>
-                        </div>
+                    {/* Details - Shown when active */}
+                    <div
+                      className={`absolute inset-0 flex items-center justify-center p-4 transition-all duration-500 ${
+                        activeButtons[index]
+                          ? "opacity-100 translate-y-0 scale-100"
+                          : "opacity-0 translate-y-4 scale-95"
+                      }`}
+                    >
+                      <div className="text-center w-full">
+                        {btn.details(activeButtons[index])}
                       </div>
                     </div>
                   </div>
-
-                  {/* Advanced Border Effect */}
-                  <div
-                    className="absolute inset-0 rounded-2xl border opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"
-                    style={{
-                      border: `1px solid ${getAccentColor(service.accent)}`,
-                      filter: "blur(0.5px)",
-                      transform: "translateZ(2px)",
-                    }}
-                  />
                 </div>
-              </ScrollReveal>
-            </div>
-          ))}
-        </div>
 
-        {/* Enhanced Buttons Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center w-full mt-10">
-          {Buttons.map((btn, index) => (
-            <button
-              key={index}
-              onClick={() => handleButtonClick(index)}
-              className={`advanced-button w-full px-10 py-9 bg-gradient-to-br from-slate-900/90 to-black/90 hover:${btn.gradient} text-white rounded-2xl transition-all duration-500 hover:scale-105 active:scale-95 font-medium border border-slate-700/30 shadow-2xl backdrop-blur-sm relative overflow-hidden group`}
-              style={{
-                transformStyle: "preserve-3d",
-              }}
-            >
-              {/* Button Background Effects */}
-              <div
-                className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${btn.gradient} opacity-0 group-hover:opacity-100 transition-all duration-700 blur-xl`}
-                style={{
-                  transform: "translateZ(-10px)",
-                }}
-              />
-
-              {/* Animated Border */}
-              <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: `linear-gradient(45deg, transparent, ${getAccentColor(
-                    btn.accent
-                  )}, transparent)`,
-                  filter: "blur(8px)",
-                }}
-              />
-
-              {/* Content Container */}
-              <div className="relative z-10 w-full h-full flex items-center justify-center">
-                <div className="text-center transition-all duration-500 transform">
-                  {/* Title - Hidden when active */}
-                  <div
-                    className={`transition-all duration-500 ${
-                      activeButtons[index] 
-                        ? "opacity-0 -translate-y-4 scale-95" 
-                        : "opacity-100 translate-y-0 scale-100"
-                    }`}
-                  >
-                    <span className="text-lg font-bold text-white">
-                      {btn.title}
-                    </span>
-                  </div>
-
-                  {/* Details - Shown when active */}
-                  <div
-                    className={`absolute inset-0 flex items-center justify-center p-4 transition-all duration-500 ${
-                      activeButtons[index]
-                        ? "opacity-100 translate-y-0 scale-100"
-                        : "opacity-0 translate-y-4 scale-95"
-                    }`}
-                  >
-                    <div className="text-center w-full">
-                      {btn.details(activeButtons[index])}
-                    </div>
+                {/* Hover Indicator */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex items-center gap-1 text-xs text-slate-400">
+                    <span>Click for details</span>
+                    <svg
+                      className="w-3 h-3"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                    >
+                      <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z" />
+                    </svg>
                   </div>
                 </div>
-              </div>
 
-              {/* Hover Indicator */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="flex items-center gap-1 text-xs text-slate-400">
-                  <span>Click for details</span>
-                  <svg
-                    className="w-3 h-3"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                  >
-                    <path d="M8 0L6.59 1.41L12.17 7H0V9H12.17L6.59 14.59L8 16L16 8L8 0Z" />
-                  </svg>
-                </div>
-              </div>
-
-              {/* Active State Border */}
-              <div
-                className={`absolute inset-0 rounded-2xl border opacity-0 transition-all duration-500 pointer-events-none ${
-                  activeButtons[index] ? "opacity-100" : ""
-                }`}
-                style={{
-                  border: `1px solid ${getAccentColor(btn.accent)}`,
-                  filter: "blur(0.5px)",
-                  boxShadow: activeButtons[index] 
-                    ? `0 0 20px ${getAccentColor(btn.accent)}40`
-                    : "none",
-                }}
-              />
-            </button>
-          ))}
+                {/* Active State Border */}
+                <div
+                  className={`absolute inset-0 rounded-2xl border opacity-0 transition-all duration-500 pointer-events-none ${
+                    activeButtons[index] ? "opacity-100" : ""
+                  }`}
+                  style={{
+                    border: `1px solid ${getAccentColor(btn.accent)}`,
+                    filter: "blur(0.5px)",
+                    boxShadow: activeButtons[index]
+                      ? `0 0 20px ${getAccentColor(btn.accent)}40`
+                      : "none",
+                  }}
+                />
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
