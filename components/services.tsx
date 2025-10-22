@@ -465,7 +465,7 @@ export function Services() {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-float-reverse"></div>
       </div>
 
-      <div className="container mx-auto px-6 lg:px-10 relative z-10">
+      <div className="container mx-auto px-6 lg:px-10 relative z-10 mt-12">
         <div className="space-y-6 relative z-20 mx-4 md:mx-8 lg:mx-10">
           {/* Header Section */}
           <ScrollReveal className="text-center mb-16">
